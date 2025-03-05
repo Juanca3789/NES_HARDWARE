@@ -1,19 +1,4 @@
-#include <cstdint>
-#include <stdexcept>
-#include "Interface_Mem.cpp"
-
-class Vram : public InterfaceMemory{
-	private:
-		uint8_t* vram_block;
-		int mirroring_mode;
-		int width;
-		uint16_t map_address(const uint16_t& address) const;
-	public:
-		Vram(int width, int mirroring_mode);
-		void setByte(const uint16_t& address, const uint8_t& value) override;
-		uint8_t getByte(const uint16_t& address) const override;
-		~Vram() override;
-};
+#include "VRAM.h"
 
 Vram::Vram(int width, int mirroring_mode) : width(width), mirroring_mode(mirroring_mode), vram_block(nullptr){
 	if (this->width <= 0)
