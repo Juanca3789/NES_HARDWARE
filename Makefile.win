@@ -4,11 +4,11 @@
 CPP      = g++.exe -D__DEBUG__
 CC       = gcc.exe -D__DEBUG__
 WINDRES  = windres.exe
-OBJ      = RAM.o VRAM.o OAM.o CPU.o BUS.o
-LINKOBJ  = RAM.o VRAM.o OAM.o CPU.o BUS.o
+OBJ      = obj/BUS.o obj/CPU.o obj/OAM.o obj/RAM.o obj/VRAM.o
+LINKOBJ  = obj/BUS.o obj/CPU.o obj/OAM.o obj/RAM.o obj/VRAM.o
 LIBS     = -L"C:/Program Files (x86)/Embarcadero/Dev-Cpp/TDM-GCC-64/x86_64-w64-mingw32/lib32" -static-libgcc -lbgi -lgdi32 -lcomdlg32 -luuid -loleaut32 -lole32 -m32 -g3
-INCS     = -I"C:/Program Files (x86)/Embarcadero/Dev-Cpp/TDM-GCC-64/include" -I"C:/Program Files (x86)/Embarcadero/Dev-Cpp/TDM-GCC-64/x86_64-w64-mingw32/include" -I"C:/Program Files (x86)/Embarcadero/Dev-Cpp/TDM-GCC-64/lib/gcc/x86_64-w64-mingw32/9.2.0/include"
-CXXINCS  = -I"C:/Program Files (x86)/Embarcadero/Dev-Cpp/TDM-GCC-64/include" -I"C:/Program Files (x86)/Embarcadero/Dev-Cpp/TDM-GCC-64/x86_64-w64-mingw32/include" -I"C:/Program Files (x86)/Embarcadero/Dev-Cpp/TDM-GCC-64/lib/gcc/x86_64-w64-mingw32/9.2.0/include" -I"C:/Program Files (x86)/Embarcadero/Dev-Cpp/TDM-GCC-64/lib/gcc/x86_64-w64-mingw32/9.2.0/include/c++"
+INCS     = -I"C:/Program Files (x86)/Embarcadero/Dev-Cpp/TDM-GCC-64/include" -I"C:/Program Files (x86)/Embarcadero/Dev-Cpp/TDM-GCC-64/x86_64-w64-mingw32/include" -I"C:/Program Files (x86)/Embarcadero/Dev-Cpp/TDM-GCC-64/lib/gcc/x86_64-w64-mingw32/9.2.0/include" -I"C:/Users/USER/Documents/Emulador/include"
+CXXINCS  = -I"C:/Program Files (x86)/Embarcadero/Dev-Cpp/TDM-GCC-64/include" -I"C:/Program Files (x86)/Embarcadero/Dev-Cpp/TDM-GCC-64/x86_64-w64-mingw32/include" -I"C:/Program Files (x86)/Embarcadero/Dev-Cpp/TDM-GCC-64/lib/gcc/x86_64-w64-mingw32/9.2.0/include" -I"C:/Program Files (x86)/Embarcadero/Dev-Cpp/TDM-GCC-64/lib/gcc/x86_64-w64-mingw32/9.2.0/include/c++" -I"C:/Users/USER/Documents/Emulador/include"
 BIN      = Emulator.exe
 CXXFLAGS = $(CXXINCS) -m32 -g3 -DprojCOVERAGE_TEST=1
 CFLAGS   = $(INCS) -m32 -g3 -DprojCOVERAGE_TEST=1
@@ -24,17 +24,17 @@ clean: clean-custom
 $(BIN): $(OBJ)
 	$(CPP) $(LINKOBJ) -o $(BIN) $(LIBS)
 
-RAM.o: RAM.cpp
-	$(CPP) -c RAM.cpp -o RAM.o $(CXXFLAGS)
+obj/BUS.o: src/BUS.cpp
+	$(CPP) -c src/BUS.cpp -o obj/BUS.o $(CXXFLAGS)
 
-VRAM.o: VRAM.cpp
-	$(CPP) -c VRAM.cpp -o VRAM.o $(CXXFLAGS)
+obj/CPU.o: src/CPU.cpp
+	$(CPP) -c src/CPU.cpp -o obj/CPU.o $(CXXFLAGS)
 
-OAM.o: OAM.cpp
-	$(CPP) -c OAM.cpp -o OAM.o $(CXXFLAGS)
+obj/OAM.o: src/OAM.cpp
+	$(CPP) -c src/OAM.cpp -o obj/OAM.o $(CXXFLAGS)
 
-CPU.o: CPU.cpp
-	$(CPP) -c CPU.cpp -o CPU.o $(CXXFLAGS)
+obj/RAM.o: src/RAM.cpp
+	$(CPP) -c src/RAM.cpp -o obj/RAM.o $(CXXFLAGS)
 
-BUS.o: BUS.cpp
-	$(CPP) -c BUS.cpp -o BUS.o $(CXXFLAGS)
+obj/VRAM.o: src/VRAM.cpp
+	$(CPP) -c src/VRAM.cpp -o obj/VRAM.o $(CXXFLAGS)
