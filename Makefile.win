@@ -4,8 +4,8 @@
 CPP      = g++.exe -D__DEBUG__
 CC       = gcc.exe -D__DEBUG__
 WINDRES  = windres.exe
-OBJ      = obj/BUS.o obj/CPU.o obj/OAM.o obj/RAM.o obj/VRAM.o
-LINKOBJ  = obj/BUS.o obj/CPU.o obj/OAM.o obj/RAM.o obj/VRAM.o
+OBJ      = obj/BUS.o obj/CPU.o obj/OAM.o obj/RAM.o obj/VRAM.o obj/InterruptController.o
+LINKOBJ  = obj/BUS.o obj/CPU.o obj/OAM.o obj/RAM.o obj/VRAM.o obj/InterruptController.o
 LIBS     = -L"C:/Program Files (x86)/Embarcadero/Dev-Cpp/TDM-GCC-64/x86_64-w64-mingw32/lib32" -static-libgcc -lbgi -lgdi32 -lcomdlg32 -luuid -loleaut32 -lole32 -m32 -g3
 INCS     = -I"C:/Program Files (x86)/Embarcadero/Dev-Cpp/TDM-GCC-64/include" -I"C:/Program Files (x86)/Embarcadero/Dev-Cpp/TDM-GCC-64/x86_64-w64-mingw32/include" -I"C:/Program Files (x86)/Embarcadero/Dev-Cpp/TDM-GCC-64/lib/gcc/x86_64-w64-mingw32/9.2.0/include" -I"C:/Users/USER/Documents/Emulador/include"
 CXXINCS  = -I"C:/Program Files (x86)/Embarcadero/Dev-Cpp/TDM-GCC-64/include" -I"C:/Program Files (x86)/Embarcadero/Dev-Cpp/TDM-GCC-64/x86_64-w64-mingw32/include" -I"C:/Program Files (x86)/Embarcadero/Dev-Cpp/TDM-GCC-64/lib/gcc/x86_64-w64-mingw32/9.2.0/include" -I"C:/Program Files (x86)/Embarcadero/Dev-Cpp/TDM-GCC-64/lib/gcc/x86_64-w64-mingw32/9.2.0/include/c++" -I"C:/Users/USER/Documents/Emulador/include"
@@ -38,3 +38,6 @@ obj/RAM.o: src/RAM.cpp
 
 obj/VRAM.o: src/VRAM.cpp
 	$(CPP) -c src/VRAM.cpp -o obj/VRAM.o $(CXXFLAGS)
+
+obj/InterruptController.o: src/InterruptController.cpp
+	$(CPP) -c src/InterruptController.cpp -o obj/InterruptController.o $(CXXFLAGS)

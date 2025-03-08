@@ -1,14 +1,15 @@
 #include <cstdint>
 #include <stdexcept>
+#include "Interface_InterruptHandler.h"
 #include "Interface_Mem.h"
 #include "BUS.h"
-
 #ifndef CPU_H
 #define CPU_H
 
 class CPU{
 	private:
 		Bus* bus;
+		InterruptHandler* interruptHandler;
 		uint16_t PC;
 		uint8_t A;
 		uint8_t X;
@@ -111,9 +112,14 @@ class CPU{
 		void updateOverflowFlag(const uint8_t& value_1, const uint8_t& value_2, const uint8_t& result);
 		void updateInterruptFlag(const bool& value);
 		void updateBFlag(const bool& value);
+		//Ejecucion de interrupciones
+		void handleInterrupt(uint16_t lowByte, bool isBRK);
+		void NMIInterrupt();
+		void IRQInterrupt();
+		//Ejecucion principal
 		uint8_t execute_instruction(const uint8_t& opcode);
 	public:
-		CPU(Bus* bus);
+		CPU(Bus* bus, InterruptHandler* interruptHandler);
 		uint8_t run_next_instruction();
 		~CPU(){}
 };

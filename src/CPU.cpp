@@ -1,6 +1,6 @@
 #include "CPU.h"
 
-CPU::CPU(Bus* bus) : bus(bus), A(0x00), X(0x00), Y(0x00), SP(0xFF), P(0x34){
+CPU::CPU(Bus* bus, InterruptHandler* interruptHandler) : bus(bus), interruptHandler(interruptHandler), A(0x00), X(0x00), Y(0x00), SP(0xFF), P(0x34){
 	this->PC = this->bus->cpuRead(0xFFFC) | (this->bus->cpuRead(0xFFFD) << 8);
 }
 
@@ -181,12 +181,7 @@ uint8_t CPU::BVS(){return this->branchIf(this->P & 0b01000000);}
 
 void CPU::BRK(){
 	this->PC++;
-	this->pushToStack(static_cast<uint8_t>(this->PC >> 8));
-	this->pushToStack(static_cast<uint8_t>(this->PC));
-	this->updateBFlag(1);
-	this->pushToStack(this->P);
-	this->updateInterruptFlag(1);
-	this->PC = this->bus->cpuRead(0xFFFE) | (this->bus->cpuRead(0xFFFF) << 8);
+	this->handleInterrupt(0xFFFE, true);
 }
 
 void CPU::CLC(){this->P &= 0b11111110;}
@@ -446,6 +441,26 @@ void CPU::TYA(){
 	this->A = this->Y;
 	this->updateZeroFlag(this->A);
 	this->updateNegativeFlag(this->A);
+}
+
+//Ejecucion de interrupciones
+void CPU::handleInterrupt(uint16_t lowByte, bool isBRK){
+	this->pushToStack(static_cast<uint8_t>(this->PC >> 8));
+	this->pushToStack(static_cast<uint8_t>(this->PC));
+	this->updateBFlag(isBRK);
+	this->pushToStack(this->P);
+	this->updateInterruptFlag(1);
+	this->PC = this->bus->cpuRead(lowByte) | (this->bus->cpuRead(lowByte + 1) << 8);
+}
+
+void CPU::NMIInterrupt(){
+	this->handleInterrupt(0xFFFA, false);
+	this->interruptHandler->clearNMI();
+}
+
+void CPU::IRQInterrupt(){
+	this->handleInterrupt(0xFFFE, false);
+	this->interruptHandler->clearIRQ();
 }
 
 uint8_t CPU::execute_instruction(const uint8_t& opcode){
@@ -901,10 +916,17 @@ uint8_t CPU::execute_instruction(const uint8_t& opcode){
 }
 
 uint8_t CPU::run_next_instruction(){
+	if(this->interruptHandler->isNMIPending()){
+		this->NMIInterrupt();
+		return 7;
+	}
+	else if(this->interruptHandler->isIRQPending()){
+		if(!(this->P & 0b00000100)){
+			this->IRQInterrupt();
+			return 7;
+		}
+		return 0;
+	}
 	uint8_t opcode = this->fetchByte();
 	return this->execute_instruction(opcode);
-}
-
-int main(){
-	
 }
