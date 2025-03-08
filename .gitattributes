@@ -1,0 +1,19 @@
+BUS.h export-ignore
+CPU.h export-ignore
+InterruptController.h export-ignore
+Interface_InterruptHandler.h export-ignore
+Interface_Mapper.h export-ignore
+Interface_Mem.h export-ignore
+OAM.h export-ignore
+RAM.h export-ignore
+VRAM.h export-ignore
+NROM.h export-ignore
+
+BUS.cpp export-ignore
+CPU.cpp export-ignore
+InterruptController.cpp export-ignore
+main.cpp export-ignore
+OAM.cpp export-ignore
+RAM.cpp export-ignore
+VRAM.cpp export-ignore
+NROM.cpp export-ignore

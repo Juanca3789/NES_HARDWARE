@@ -3,8 +3,8 @@
 #include "Interface_InterruptHandler.h"
 #include "Interface_Mem.h"
 #include "BUS.h"
-#ifndef CPU_H
-#define CPU_H
+
+#pragma once
 
 class CPU{
 	private:
@@ -123,5 +123,3 @@ class CPU{
 		uint8_t run_next_instruction();
 		~CPU(){}
 };
-
-#endif

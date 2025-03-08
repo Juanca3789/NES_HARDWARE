@@ -2,8 +2,7 @@
 #include <mutex>
 #include "Interface_Mem.h"
 
-#ifndef BUS
-#define BUS
+#pragma once
 
 class Bus{
 	private:
@@ -18,5 +17,3 @@ class Bus{
 		void triggerNMIInterrupt();
 		~Bus();
 };
-
-#endif

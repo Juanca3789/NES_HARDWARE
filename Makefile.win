@@ -1,17 +1,17 @@
 # Project: Emulator
 # Makefile created by Embarcadero Dev-C++ 6.3
 
-CPP      = g++.exe -D__DEBUG__
-CC       = gcc.exe -D__DEBUG__
+CPP      = g++.exe
+CC       = gcc.exe
 WINDRES  = windres.exe
-OBJ      = obj/BUS.o obj/CPU.o obj/OAM.o obj/RAM.o obj/VRAM.o obj/InterruptController.o
-LINKOBJ  = obj/BUS.o obj/CPU.o obj/OAM.o obj/RAM.o obj/VRAM.o obj/InterruptController.o
-LIBS     = -L"C:/Program Files (x86)/Embarcadero/Dev-Cpp/TDM-GCC-64/x86_64-w64-mingw32/lib32" -static-libgcc -lbgi -lgdi32 -lcomdlg32 -luuid -loleaut32 -lole32 -m32 -g3
-INCS     = -I"C:/Program Files (x86)/Embarcadero/Dev-Cpp/TDM-GCC-64/include" -I"C:/Program Files (x86)/Embarcadero/Dev-Cpp/TDM-GCC-64/x86_64-w64-mingw32/include" -I"C:/Program Files (x86)/Embarcadero/Dev-Cpp/TDM-GCC-64/lib/gcc/x86_64-w64-mingw32/9.2.0/include" -I"C:/Users/USER/Documents/Emulador/include"
-CXXINCS  = -I"C:/Program Files (x86)/Embarcadero/Dev-Cpp/TDM-GCC-64/include" -I"C:/Program Files (x86)/Embarcadero/Dev-Cpp/TDM-GCC-64/x86_64-w64-mingw32/include" -I"C:/Program Files (x86)/Embarcadero/Dev-Cpp/TDM-GCC-64/lib/gcc/x86_64-w64-mingw32/9.2.0/include" -I"C:/Program Files (x86)/Embarcadero/Dev-Cpp/TDM-GCC-64/lib/gcc/x86_64-w64-mingw32/9.2.0/include/c++" -I"C:/Users/USER/Documents/Emulador/include"
+OBJ      = obj/BUS.o obj/CPU.o obj/InterruptController.o obj/OAM.o obj/RAM.o obj/VRAM.o obj/NROM.o obj/main.o
+LINKOBJ  = obj/BUS.o obj/CPU.o obj/InterruptController.o obj/OAM.o obj/RAM.o obj/VRAM.o obj/NROM.o obj/main.o
+LIBS     = -L"C:/Program Files (x86)/Embarcadero/Dev-Cpp/TDM-GCC-64/x86_64-w64-mingw32/lib32" -static-libgcc -m32
+INCS     = -I"C:/Program Files (x86)/Embarcadero/Dev-Cpp/TDM-GCC-64/include" -I"C:/Program Files (x86)/Embarcadero/Dev-Cpp/TDM-GCC-64/x86_64-w64-mingw32/include" -I"C:/Program Files (x86)/Embarcadero/Dev-Cpp/TDM-GCC-64/lib/gcc/x86_64-w64-mingw32/9.2.0/include" -I"C:/Users/USER/Documents/Emulador/include" -I"C:/Users/USER/Documents/Emulador/include/mappers"
+CXXINCS  = -I"C:/Program Files (x86)/Embarcadero/Dev-Cpp/TDM-GCC-64/include" -I"C:/Program Files (x86)/Embarcadero/Dev-Cpp/TDM-GCC-64/x86_64-w64-mingw32/include" -I"C:/Program Files (x86)/Embarcadero/Dev-Cpp/TDM-GCC-64/lib/gcc/x86_64-w64-mingw32/9.2.0/include" -I"C:/Program Files (x86)/Embarcadero/Dev-Cpp/TDM-GCC-64/lib/gcc/x86_64-w64-mingw32/9.2.0/include/c++" -I"C:/Users/USER/Documents/Emulador/include" -I"C:/Users/USER/Documents/Emulador/include/mappers"
 BIN      = Emulator.exe
-CXXFLAGS = $(CXXINCS) -m32 -g3 -DprojCOVERAGE_TEST=1
-CFLAGS   = $(INCS) -m32 -g3 -DprojCOVERAGE_TEST=1
+CXXFLAGS = $(CXXINCS) -O2 -m32 -std=gnu++17
+CFLAGS   = $(INCS) -O2 -m32 -std=gnu++17
 DEL      = C:\Program Files (x86)\Embarcadero\Dev-Cpp\devcpp.exe INTERNAL_DEL
 
 .PHONY: all all-before all-after clean clean-custom
@@ -24,20 +24,26 @@ clean: clean-custom
 $(BIN): $(OBJ)
 	$(CPP) $(LINKOBJ) -o $(BIN) $(LIBS)
 
-obj/BUS.o: src/BUS.cpp
-	$(CPP) -c src/BUS.cpp -o obj/BUS.o $(CXXFLAGS)
+obj/BUS.o: BUS.cpp
+	$(CPP) -c BUS.cpp -o obj/BUS.o $(CXXFLAGS)
 
-obj/CPU.o: src/CPU.cpp
-	$(CPP) -c src/CPU.cpp -o obj/CPU.o $(CXXFLAGS)
+obj/CPU.o: CPU.cpp
+	$(CPP) -c CPU.cpp -o obj/CPU.o $(CXXFLAGS)
 
-obj/OAM.o: src/OAM.cpp
-	$(CPP) -c src/OAM.cpp -o obj/OAM.o $(CXXFLAGS)
+obj/InterruptController.o: InterruptController.cpp
+	$(CPP) -c InterruptController.cpp -o obj/InterruptController.o $(CXXFLAGS)
 
-obj/RAM.o: src/RAM.cpp
-	$(CPP) -c src/RAM.cpp -o obj/RAM.o $(CXXFLAGS)
+obj/OAM.o: OAM.cpp
+	$(CPP) -c OAM.cpp -o obj/OAM.o $(CXXFLAGS)
 
-obj/VRAM.o: src/VRAM.cpp
-	$(CPP) -c src/VRAM.cpp -o obj/VRAM.o $(CXXFLAGS)
+obj/RAM.o: RAM.cpp
+	$(CPP) -c RAM.cpp -o obj/RAM.o $(CXXFLAGS)
 
-obj/InterruptController.o: src/InterruptController.cpp
-	$(CPP) -c src/InterruptController.cpp -o obj/InterruptController.o $(CXXFLAGS)
+obj/VRAM.o: VRAM.cpp
+	$(CPP) -c VRAM.cpp -o obj/VRAM.o $(CXXFLAGS)
+
+obj/NROM.o: NROM.cpp
+	$(CPP) -c NROM.cpp -o obj/NROM.o $(CXXFLAGS)
+
+obj/main.o: main.cpp
+	$(CPP) -c main.cpp -o obj/main.o $(CXXFLAGS)

@@ -1,8 +1,7 @@
 #include <mutex>
 #include "Interface_InterruptHandler.h"
 
-#ifndef INTERRUPT_CONTROLLER
-#define INTERRUPT_CONTROLLER
+#pragma once
 
 class InterruptController : public InterruptHandler{
 	private:
@@ -18,5 +17,3 @@ class InterruptController : public InterruptHandler{
 		void clearIRQ() override;
 		~InterruptController() override = default;
 };
-
-#endif

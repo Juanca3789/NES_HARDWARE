@@ -2,18 +2,17 @@
 #include <stdexcept>
 #include "Interface_Mem.h"
 
-#ifndef OAM
-#define OAM
+#pragma once
 
-class Oam : public InterfaceMemory{
+class Vram : public InterfaceMemory{
 	private:
-		uint8_t* oam_block;
+		uint8_t* vram_block;
+		int mirroring_mode;
 		int width;
+		uint16_t map_address(const uint16_t& address) const;
 	public:
-		Oam(int width);
+		Vram(int width, int mirroring_mode);
 		void setByte(const uint16_t& address, const uint8_t& value) override;
 		uint8_t getByte(const uint16_t& address) const override;
-		~Oam() override;
+		~Vram() override;
 };
-
-#endif

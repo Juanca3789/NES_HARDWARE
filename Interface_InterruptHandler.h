@@ -1,5 +1,4 @@
-#ifndef INTERRUPT_HANDLER
-#define INTERRUPT_HANDLER
+#pragma once
 
 class InterruptHandler{
 	public:
@@ -11,5 +10,3 @@ class InterruptHandler{
 		virtual void clearIRQ() = 0;
 		virtual ~InterruptHandler() = default;
 };
-
-#endif
